@@ -1,5 +1,5 @@
 import api from '../services/api.js';
-import { AccountInfo } from '@/utils/types';
+import { Account } from '@utils/types';
 import _get from 'lodash/get';
 
 const state = () => ({
@@ -33,7 +33,7 @@ const actions = {
 
     if (errorCode) return res;
 
-    const accountInfo: AccountInfo = _get(res, 'result.accountInfo');
+    const accountInfo: Account = _get(res, 'result.accountInfo');
 
     if (accountInfo) {
       commit('setAccountInfo', accountInfo);

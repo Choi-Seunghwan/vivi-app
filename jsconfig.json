@@ -2,17 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@@/*": [
-        "./*"
-      ]
+      "@/*": ["./src/*"],
+      "@utils/*": ["../vivi-utils/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "public"
-  ]
+  "exclude": ["node_modules", "dist", "public"]
 }
