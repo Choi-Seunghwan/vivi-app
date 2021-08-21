@@ -18,16 +18,19 @@ const getters = {
 };
 
 const actions = {
-  async createRoom(_, { title, type = TYPE_RADIO }) {
-    ws.sendMessage('live/createRoom', { title, type });
-  },
-
-  async startLive({ dispatch, rootGetters }, roomInfo) {
+  async createRoom({ dispatch, rootGetters }, { title, type = TYPE_RADIO }) {
     await dispatch('media/createOffer', true, { root: true });
-
     const localDescriptionOffer = rootGetters['media/getLocalDescriptionOffer'];
-    ws.sendMessage('live/startLive', [{ ...roomInfo, localDescriptionOffer }]);
+
+    ws.sendMessage('live/createRoom', { title, type, localDescriptionOffer });
   },
+
+  // async startLive({ dispatch, rootGetters }, roomInfo) {
+  //   await dispatch('media/createOffer', true, { root: true });
+
+  //   const localDescriptionOffer = rootGetters['media/getLocalDescriptionOffer'];
+  //   ws.sendMessage('live/startLive', [{ ...roomInfo, localDescriptionOffer }]);
+  // },
 
   joinRoom({ state }, roomId: string) {
     ws.sendMessage('live/joinRoom', { roomId });

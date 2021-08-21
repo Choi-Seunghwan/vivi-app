@@ -32,11 +32,11 @@ export default {
     },
     async init() {
       this.roomList = await this.getRoomList();
+      console.log('@@', this.roomList);
       this.loading = false;
     }
   },
   async beforeMount() {
-    this.roomList = await this.getRoomList();
     this.init();
   }
 };

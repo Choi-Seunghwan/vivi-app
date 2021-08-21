@@ -9,7 +9,7 @@
           <router-link :to="{ path: '/' }" class="nav__item">{{ $t('live') }}</router-link>
         </li>
         <li>
-          <router-link :to="{ path: '/startLive' }" class="nav__item">{{ $t('startLive') }}</router-link>
+          <router-link :to="{ path: '/create-live-room' }" class="nav__item">{{ $t('startLive') }}</router-link>
         </li>
       </ul>
       <div class="divide" />

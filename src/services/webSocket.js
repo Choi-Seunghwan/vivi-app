@@ -23,7 +23,6 @@ class ServiceWebSocket {
 
   connection() {
     this.ws = io('localhost:5000');
-
     this.ws.on('replyMessage', args => {
       this.replyMessage(args);
     });

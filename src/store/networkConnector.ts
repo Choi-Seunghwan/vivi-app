@@ -14,7 +14,7 @@ const actions = {
   },
 
   connection() {
-    ws.connection();
+    ws.wsInit();
   }
 };
 

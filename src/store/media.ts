@@ -1,9 +1,19 @@
 const state = () => ({
   localStream: undefined,
-  roomStream: undefined,
+  liveStream: undefined,
   peerConnection: undefined,
   localDescriptionOffer: undefined
 });
+
+const iceServers = {
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+    { urls: 'stun:stun2.l.google.com:19302' },
+    { urls: 'stun:stun3.l.google.com:19302' },
+    { urls: 'stun:stun4.l.google.com:19302' }
+  ]
+};
 
 const mutations = {};
 
@@ -16,7 +26,7 @@ const getters = {
 const actions = {
   initMedia({ state }) {
     const { RTCPeerConnection } = window;
-    state.peerConnection = new RTCPeerConnection();
+    state.peerConnection = new RTCPeerConnection(iceServers);
   },
 
   async getDeviceMedia({ state }) {
@@ -30,14 +40,6 @@ const actions = {
         alert(error);
       }
     }
-  },
-
-  setLocalStreamVideoEl({ state }, el) {
-    el.srcObject = state.localStream;
-  },
-
-  setRoomStreamVideoEl({ state }, el) {
-    el.srcObject = state.roomStream;
   },
 
   async createOffer({ state }) {

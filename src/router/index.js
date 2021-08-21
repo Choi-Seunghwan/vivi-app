@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from '@/pages/Home.vue';
 import Login from '@/pages/Login.vue';
 import LiveRoom from '@/pages/LiveRoom.vue';
-import startLive from '@/pages/StartLive.vue';
+import CreateLiveRoom from '@/pages/CreateLiveRoom.vue';
 import NotFound from '@/pages/NotFound.vue';
 
 Vue.use(Router);
@@ -23,14 +23,14 @@ export default new Router({
       component: Login
     },
     {
-      path: '/liveRoom/:roomId',
+      path: '/live-room/:roomId',
       name: 'liveRoom',
       component: LiveRoom
     },
     {
-      path: '/startLive',
-      name: 'startLive',
-      component: startLive
+      path: '/create-live-room',
+      name: 'createLiveRoom',
+      component: CreateLiveRoom
     },
     {
       path: '*',
