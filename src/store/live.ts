@@ -4,17 +4,15 @@ import { TYPE_RADIO, SET_CURRENT_LIVE_ROOM_ID } from '@/constant';
 import _get from 'lodash/get';
 
 const state = () => ({
-  currentLiveRoom: {},
-  currentLiveRoomId: ''
+  joinedLiveRoom: {}
 });
 
 const mutations = {
-  [SET_CURRENT_LIVE_ROOM_ID]: (state, roomId) => (state.currentLiveRoomId = roomId),
-  setCurrentLiveRoom: (state, room) => (state.currentLiveRoom = room)
+  setJoinedLiveRoom: (state, room) => (state.joinedLiveRoom = room)
 };
 
 const getters = {
-  _currentLiveRoomId: state => state.currentLiveRoomId
+  _joinedLiveRoomId: state => state.joinedLiveRoomId
 };
 
 const actions = {
@@ -37,7 +35,7 @@ const actions = {
   },
 
   outRoom({ state }) {
-    const { roomId } = state.currentLiveRoom;
+    const { roomId } = state.joinedLiveRoom;
     ws.sendMessage('live/outRoom', { roomId });
   },
 
@@ -48,15 +46,16 @@ const actions = {
     return roomList;
   },
 
-  handleMessage({ state, commit }, args) {
+  handleMessage({ state, commit, dispatch }, args) {
     const { method } = args;
     const splittedMethod = method.split('/');
 
     switch (splittedMethod[1]) {
       case 'joinRoom': {
-        const { room } = args.result;
-        const { roomId } = room;
-        commit(SET_CURRENT_LIVE_ROOM_ID, roomId);
+        const { room } = args.result.result;
+        const { creatorDescriptionOffer } = room;
+        commit('setJoinedLiveRoom', room);
+        commit('media/setRemoteDescriptionOffer', creatorDescriptionOffer, { root: true });
         break;
       }
 

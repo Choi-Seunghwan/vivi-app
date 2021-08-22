@@ -28,11 +28,10 @@ export default {
     ...mapActions('live', ['enterRoom', 'getRoomList']),
     roomCardClickHandler(roomItem) {
       const { roomId } = roomItem;
-      this.$router.push(`/liveRoom/${roomId}`);
+      this.$router.push(`/live-room/${roomId}`);
     },
     async init() {
       this.roomList = await this.getRoomList();
-      console.log('@@', this.roomList);
       this.loading = false;
     }
   },

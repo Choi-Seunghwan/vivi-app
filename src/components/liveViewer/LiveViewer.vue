@@ -2,6 +2,7 @@
   <!-- 임시  -->
   <div class="liveViewer">
     <div class="info"></div>
+    <button @click="btnHandler">setRemote</button>
     <VideoPlayer ref="localVideo" :videoId="'localVideo'"></VideoPlayer>
     <VideoPlayer ref="roomVideo" :videoId="'roomVideo'"></VideoPlayer>
   </div>
@@ -23,16 +24,27 @@ export default {
   },
   methods: {
     ...mapActions('live', ['callUser']),
-    ...mapActions('media', ['getDeviceMedia', 'createOffer', 'setLocalStreamVideoEl']),
+    ...mapActions('media', [
+      'getDeviceMedia',
+      'createOffer',
+      'setLocalStreamVideoEl',
+      'setRemoteStreamVideoEl',
+      'setRemote'
+    ]),
     callHandler() {
       // const offer = this.createOffer();
+    },
+    btnHandler() {},
+    async init() {
+      await this.getDeviceMedia();
+      this.$nextTick(() => {
+        this.setLocalStreamVideoEl(this.$refs.localVideo.getVideoEl());
+        this.setRemoteStreamVideoEl(this.$refs.remoteVideo.getVideoEl());
+      });
     }
   },
-  async mounted() {
-    await this.getDeviceMedia();
-    this.$nextTick(() => {
-      this.setLocalStreamVideoEl(this.$refs.localVideo.getVideoEl());
-    });
+  mounted() {
+    this.init();
   }
 };
 </script>

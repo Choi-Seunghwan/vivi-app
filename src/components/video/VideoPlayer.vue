@@ -1,6 +1,6 @@
 <template>
   <div class="videoPlayer">
-    <video :srcObject="mediaStream" :ref="`video_${videoId}`" autoplay :id="videoId" width="300" height="200"></video>
+    <video :srcObject="mediaStream" :ref="`video-${videoId}`" autoplay :id="videoId" width="300" height="200"></video>
   </div>
 </template>
 <script>
@@ -13,8 +13,8 @@ export default {
   mounted() {},
   methods: {
     getVideoEl() {
-      console.log('this.$refs[`vidoe_${this.videoId}`];', this.$refs, this.$refs[`vidoe_${this.videoId}`]);
-      return this.$refs[`video_${this.videoId}`];
+      console.log('videoPlayer ', this.$refs, this.$refs[`video-${this.videoId}`]);
+      return this.$refs[`video-${this.videoId}`];
     }
   }
 };

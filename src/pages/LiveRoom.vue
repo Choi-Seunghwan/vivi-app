@@ -1,5 +1,5 @@
 <template>
-  <div class="live">
+  <div class="liveRoom">
     <LiveViewerContainer />
   </div>
 </template>
@@ -25,4 +25,7 @@ export default {
   mounted() {}
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.liveRoom {
+}
+</style>
