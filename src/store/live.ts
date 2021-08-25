@@ -34,6 +34,15 @@ const actions = {
     ws.sendMessage('live/joinRoom', { roomId });
   },
 
+  joinRoomAnswer({ state }, { localDesc }) {
+    const { joinedLiveRoom } = state;
+    ws.sendMessage('live/joinRoomAnswer', { roomId: joinedLiveRoom.roomId, localDesc });
+  },
+
+  joinRoomReceiveAnswer({ state, dispatch }, { remoteDesc }) {
+    dispatch('media/setRemoteDesc', { remoteDesc }, { root: true });
+  },
+
   outRoom({ state }) {
     const { roomId } = state.joinedLiveRoom;
     ws.sendMessage('live/outRoom', { roomId });
@@ -46,20 +55,29 @@ const actions = {
     return roomList;
   },
 
-  handleMessage({ state, commit, dispatch }, args) {
+  async handleMessage({ state, commit, dispatch }, args) {
     const { method } = args;
     const splittedMethod = method.split('/');
 
     switch (splittedMethod[1]) {
       case 'joinRoom': {
-        const { room } = args.result.result;
+        const { room } = args.result;
         const { creatorDescriptionOffer } = room;
         commit('setJoinedLiveRoom', room);
-        commit('media/setRemoteDescriptionOffer', creatorDescriptionOffer, { root: true });
+        const localDesc = await dispatch(
+          'media/setRemoteDescAndGetLocalDesc',
+          { descriptionOffer: creatorDescriptionOffer },
+          { root: true }
+        );
+        dispatch('joinRoomAnswer', { localDesc });
         break;
       }
 
       case 'outRoom': {
+        break;
+      }
+      case 'joinRoomReceiveAnswer': {
+        dispatch('joinRoomReceiveAnswer');
         break;
       }
       default:

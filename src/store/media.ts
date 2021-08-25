@@ -52,18 +52,28 @@ const actions = {
   },
 
   setRemoteStreamVideoEl({ state }, remoteVideoEl) {
-    remoteVideoEl.srcObject = state.localStream;
+    remoteVideoEl.srcObject = state.liveStream;
   },
 
   async createOffer({ state }) {
     const { RTCSessionDescription } = window;
     const offer = await state.peerConnection.createOffer();
     await state.peerConnection.setLocalDescription(new RTCSessionDescription(offer));
-    state.localDescriptionOffer = offer;
+    state.localDescriptionOffer = state.peerConnection.localDescription;
   },
 
-  setRemote({ state }) {
-    state.peerConnection.setRemoteDescription(new RTCSessionDescription(state.remoteDescription));
+  async setRemoteDescAndGetLocalDesc({ state }, { descriptionOffer }) {
+    const { peerConnection } = state;
+    peerConnection.setRemoteDescription(descriptionOffer);
+
+    const answer = await peerConnection.createAnswer();
+    peerConnection.setLocalDescription(new RTCSessionDescription(answer));
+    return peerConnection.localDescription;
+  },
+
+  setRemoteDesc({ state }, { remoteDesc }) {
+    const { peerConnection } = state;
+    peerConnection.setRemoteDescription(remoteDesc);
   }
 };
 

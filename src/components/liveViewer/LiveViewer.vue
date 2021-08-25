@@ -39,7 +39,7 @@ export default {
       await this.getDeviceMedia();
       this.$nextTick(() => {
         this.setLocalStreamVideoEl(this.$refs.localVideo.getVideoEl());
-        this.setRemoteStreamVideoEl(this.$refs.remoteVideo.getVideoEl());
+        this.setRemoteStreamVideoEl(this.$refs.roomVideo.getVideoEl());
       });
     }
   },
